@@ -40,24 +40,25 @@ cars.push(new Products({brand: "VOLKSWAGEN", model: "GOLF", year: 2022, price: 3
 
   /* ---------- Creamos la funcion y evento para listar los productos---------- */      
 
-let contenedor = document.getElementById("producte");               // Traemos el nodo que tiene el atributo product
-let butt1 = document.getElementById("btn1");                        // Traemos el nodo que tiene el atributo product
-let butt2 = document.getElementById("btn2");
+let contenedor = document.getElementById("producte");                   // Traemos el nodo que tiene el atributo product
+let butt1 = document.getElementById("btn1");                            // Traemos el nodo que tiene el atributo btn1
+let butt2 = document.getElementById("btn2");                            // Traemos el nodo que tiene el atributo btn1
 
-function listado (){                                                // Creamos la funcion listado, para recorrer el array y llamarla mas adelante
-    for(let item of cars){                                          // Recorremos todo el Array compuesto por objetos.
-    let div = document.createElement("div");                        // Creamos un div para introducir el listado de productos.
-    div.innerHTML =    `<h3> Marca: ${item.brand} </h3>            
-                        <p> Modelo: ${item.model} </p>      
-                        <b> precio $${item.price} </b>
-                        <br> \n <br> `;                              // introducimos en el HTML el listado de productos.
-     contenedor.append(div);                                        // Insertamos el contenido en la etiqueta div que se va creando anteriormente.
-    }
-};
+
+const listado = () => {                                                 // Creamos la funcion listado, para recorrer el array y llamarla mas adelante
+    cars.forEach(item => {                                              // Recorremos todo el Array compuesto por objetos.
+        let div = document.createElement("div");                        // Creamos un div para introducir el listado de productos.
+        div.innerHTML =    `<h3> Marca: ${item.brand} </h3>            
+                            <p> Modelo: ${item.model} </p>      
+                            <b> precio $${item.price} </b>
+                            <br> \n <br> `;                              // introducimos en el HTML el listado de productos.
+        contenedor.append(div);                                          // Insertamos el contenido en la etiqueta div que se va creando anteriormente.
+        })
+    };
               
-butt1.addEventListener("click", listado);                           // Utilizando el Evento Clic Creamos el listado de productos.
-butt2.addEventListener("click",() => {                              // Utilizando el Evento Clic Borramos el listado de productos.
-    contenedor.innerHTML  = "";
+butt1.addEventListener("click", listado);                               // Utilizando el Evento Clic Creamos el listado de productos.
+butt2.addEventListener("click",() => {                                  // Utilizando el Evento Clic Borramos el listado de productos.
+contenedor.innerHTML  = "";
 });
 
 
@@ -88,37 +89,23 @@ butt2.addEventListener("click",() => {                              // Utilizand
 /* ---------- Opcion para buscar un Producto ---------- */      
 
                
-                
-                
-                let formulario2 = document.getElementById("form2");
-                let filters = document.getElementById("filter"); 
+filtra2 = [];
 
-                formulario2.addEventListener("submit", (e) => {
-                    e.preventDefault();
-                    let findbrand = e.target.children;
-                    findbrand = findbrand.toUpperCase();
-                    const result = cars.filter(car => car.brand === findbrand);
+let formulario2 = document.getElementById("form2");                             // Traemos el nodo que tiene el atributo filter.
+let filters = document.getElementById("filter");                                // Traemos el nodo que tiene el atributo filter.
 
+formulario2.addEventListener("submit", (e) => {                                 // Utilizando el evento "submit" creamos una funcion para extraer los datos tal cual fueron introducidos en la pagina.
+    e.preventDefault();""                                                       // Prevenimos que la pagina se recargue al dar click en submit  .
+    let findBrand = e.target.children;                                          // Capturamos las entradas del formulario y la asignamos a la variable findBrand, nos trae un HTML Collection.                           
+    let brandValue = findBrand[0].value;                                        // Asginamos a la variable  brandValue el contenido de la etiqueta en la posicion 0, nos devuelve el texto tal cual lo escribimos.   
+    const result = cars.filter(car => car.brand === brandValue.toUpperCase());  // Usamos el Metodo Filter para que busque en el Array de productos la marca que necesitamos
+    result.forEach(item3 => {                                                   // Recorremos el array que nos entrego el metodo Filter.
+        let p = document.createElement("p");                                    // Creamos el elemento parrafo.
+        p.innerHTML = item3.showCars();                                         // introducimos el listado en el HTML.
+        filters.append(p);                                                      // Agregamos el contenido a la etiqueta p.
 
-                    result.forEach(item3 => {                                   // Recorremos el array que nos entrego la funcion anterior.
-                        let p = document.createElement("p");                    // Creamos el elemento parrafo.
-                        p.innerHTML = item3.showCars();                         // introducimos el listado en el HTML.
-                        filters.append(p);                                      // Agregamos el contenido a la etiqueta p.
-                    });
-                });            
+    });
 
+});            
 
-                
-
-
-               /*  let filters = document.getElementById("filter");            // Traemos el nodo que tiene el atributo filter.
-                let findbrand = prompt("Ingrese la Marca a Buscar, EJ: audi");    // Ingresamos la marca que deseamos buscar.
-                findbrand = findbrand.toUpperCase();                        // Convertimos la entrada de texto a mayuscula.
-                const result = cars.filter(car => car.brand === findbrand); // Usamos el arrow f para buscar la marca.
-
-                result.forEach(item3 => {                                   // Recorremos el array que nos entrego la funcion anterior.
-                    let p = document.createElement("p");                    // Creamos el elemento parrafo.
-                    p.innerHTML = item3.showCars();                         // introducimos el listado en el HTML.
-                    filters.append(p);                                      // Agregamos el contenido a la etiqueta p.
-                }); */
     
